@@ -42,28 +42,35 @@ const index = () => {
         <Link href='/(user)' asChild>
           <Button
             text='User Dashboard'
-            icon={<Ionicons name='person' size={20} color='white' />}
+            icon={<Ionicons name='person' size={22} color='white' />}
           />
         </Link>
 
         <Link href='/(admin)' asChild>
           <Button
             text='Admin Dashboard'
-            icon={<Ionicons name='settings' size={20} color='white' />}
+            icon={<Ionicons name='settings' size={22} color='white' />}
+          />
+        </Link>
+
+        <Link href='/sign-up' asChild>
+          <Button
+            text='Create New Account'
+            icon={<Ionicons name='log-in' size={22} color='white' />}
           />
         </Link>
 
         <Link href='/sign-in' asChild>
           <Button
-            text='Sign In Again'
-            icon={<Ionicons name='log-in' size={20} color='white' />}
+            text='Sign In'
+            icon={<Ionicons name='log-in' size={22} color='white' />}
           />
         </Link>
 
         <Button
           text='Sign Out'
           onPress={() => supabase.auth.signOut()}
-          icon={<Ionicons name='log-out' size={20} color='white' />}
+          icon={<Ionicons name='log-out' size={22} color='white' />}
         />
       </View>
     </View>
