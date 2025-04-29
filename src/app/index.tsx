@@ -29,9 +29,11 @@ const index = () => {
       {/* 🧑‍🍳 Header */}
       <View style={styles.header}>
         <MaterialCommunityIcons
-          name='silverware-fork-knife'
+          // name='silverware-fork-knife'
+          name='food-turkey'
           size={42}
-          color={Colors.light.tint}
+          // color={Colors.light.tint}
+          color='chocolate'
         />
         <Text style={styles.title}>FoodieHub</Text>
         <Text style={styles.subtitle}>Pick your role & start ordering</Text>
@@ -97,7 +99,8 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: '700',
     marginTop: 10,
-    color: Colors.light.tint,
+    // color: Colors.light.tint,
+    color: 'chocolate',
   },
   subtitle: {
     fontSize: 14,

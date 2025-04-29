@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 
 export default function AuthLayout() {
   const { session } = useAuth();
-  console.log(session?.user);
 
   if (session) {
     <Redirect href={'/'} />;
