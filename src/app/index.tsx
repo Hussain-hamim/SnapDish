@@ -1,7 +1,7 @@
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import React from 'react';
 import Button from '../components/Button';
-import { Link, Redirect } from 'expo-router';
+import { Link, Redirect, Stack } from 'expo-router';
 import { useAuth } from '@/providers/AuthProvider';
 import { supabase } from '@/lib/supabase';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -24,6 +24,8 @@ const index = () => {
 
   return (
     <View style={styles.container}>
+      <Stack.Screen options={{ headerShown: false }} />
+
       {/* 🧑‍🍳 Header */}
       <View style={styles.header}>
         <MaterialCommunityIcons
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.light.background,
     padding: 20,
-    paddingTop: 70,
+    paddingTop: 100,
   },
   header: {
     alignItems: 'center',
