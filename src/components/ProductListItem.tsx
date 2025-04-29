@@ -12,6 +12,9 @@ type ProductListItemProps = {
 
 const ProductListItem = ({ product }: ProductListItemProps) => {
   const segments = useSegments();
+  console.log('🚀 ~ ProductListItem ~ segments:', segments);
+
+  // /${segments[0]}/menu/ same as /(admin)/menu
 
   return (
     <Link href={`/${segments[0]}/menu/${product.id}`} asChild>

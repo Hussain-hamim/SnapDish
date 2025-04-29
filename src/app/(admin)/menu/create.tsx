@@ -118,7 +118,7 @@ const CreateProductScreen = () => {
       <TextInput
         value={name}
         onChangeText={setName}
-        placeholder="Name"
+        placeholder='Name'
         style={styles.input}
       />
 
@@ -126,9 +126,9 @@ const CreateProductScreen = () => {
       <TextInput
         value={price}
         onChangeText={setPrice}
-        placeholder="9.99"
+        placeholder='9.99'
         style={styles.input}
-        keyboardType="numeric"
+        keyboardType='numeric'
       />
 
       <Text style={{ color: 'red' }}>{errors}</Text>
