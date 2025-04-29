@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.light.background,
     padding: 20,
-    paddingTop: 50,
+    paddingTop: 70,
   },
   header: {
     alignItems: 'center',
@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 16,
     padding: 25,
+    marginTop: 20,
     shadowColor: '#000',
     shadowOpacity: 0.08,
     shadowOffset: { width: 0, height: 6 },
