@@ -13,20 +13,23 @@ type ProductListItemProps = {
 const ProductListItem = ({ product }: ProductListItemProps) => {
   const segments = useSegments();
 
-  // /${segments[0]}/menu/ same as /(admin)/menu
-
   return (
     <Link href={`/${segments[0]}/menu/${product.id}`} asChild>
       <Pressable style={styles.container}>
-        <Image
-          source={{ uri: product.image || defaultPizzaImage }}
-          // source={require('@assets/images/icon.png')}
-          style={styles.image}
-          resizeMode='contain'
-        />
+        <View style={styles.imageWrapper}>
+          <Image
+            source={{ uri: product.image || defaultPizzaImage }}
+            style={styles.image}
+            resizeMode='cover'
+          />
+          <View style={styles.priceTag}>
+            <Text style={styles.priceText}>${product.price}</Text>
+          </View>
+        </View>
 
-        <Text style={styles.title}>{product.name}</Text>
-        <Text style={styles.price}>${product.price}</Text>
+        <Text numberOfLines={1} style={styles.title}>
+          {product.name}
+        </Text>
       </Pressable>
     </Link>
   );
@@ -40,23 +43,41 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 20,
     flex: 1,
-    maxWidth: '50%',
+    maxWidth: '48%',
+    margin: '1%',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 5 },
+    shadowRadius: 10,
+    elevation: 5,
   },
-
+  imageWrapper: {
+    position: 'relative',
+    borderRadius: 15,
+    overflow: 'hidden',
+  },
   image: {
     width: '100%',
     aspectRatio: 1,
-    // height: 200,
-    // width: 200,
   },
-
-  title: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginVertical: 10,
+  priceTag: {
+    position: 'absolute',
+    bottom: 8,
+    right: 8,
+    backgroundColor: Colors.light.tint,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 12,
   },
-  price: {
-    color: Colors.light.tint,
+  priceText: {
+    color: 'white',
     fontWeight: 'bold',
+    fontSize: 12,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginTop: 8,
+    textAlign: 'center',
   },
 });
