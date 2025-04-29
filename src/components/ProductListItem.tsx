@@ -18,8 +18,9 @@ const ProductListItem = ({ product }: ProductListItemProps) => {
       <Pressable style={styles.container}>
         <Image
           source={{ uri: product.image || defaultPizzaImage }}
+          // source={require('@assets/images/icon.png')}
           style={styles.image}
-          resizeMode="contain"
+          resizeMode='contain'
         />
 
         <Text style={styles.title}>{product.name}</Text>
@@ -43,6 +44,8 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     aspectRatio: 1,
+    // height: 200,
+    // width: 200,
   },
 
   title: {
