@@ -8,7 +8,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
 const index = () => {
-  const { session, loading } = useAuth();
+  const { session, loading, isAdmin } = useAuth();
 
   if (loading) {
     return (
@@ -20,6 +20,10 @@ const index = () => {
 
   if (!session) {
     return <Redirect href='/sign-in' />;
+  }
+
+  if (!isAdmin) {
+    return <Redirect href='/(user)' />;
   }
 
   return (
