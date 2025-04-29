@@ -11,7 +11,7 @@ import {
 import React, { useState } from 'react';
 import Button from '../../components/Button';
 import Colors from '../../constants/Colors';
-import { Link, Stack } from 'expo-router';
+import { Link, router, Stack } from 'expo-router';
 import { supabase } from '@/lib/supabase';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
@@ -19,6 +19,7 @@ const SignInScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  //hello4@dev.com
 
   async function handleSignIn() {
     setLoading(true);
@@ -28,6 +29,7 @@ const SignInScreen = () => {
     });
     if (error) Alert.alert(error.message);
     setLoading(false);
+    router.push('/');
   }
 
   return (

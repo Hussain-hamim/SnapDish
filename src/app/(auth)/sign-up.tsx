@@ -11,7 +11,7 @@ import {
 import React, { useState } from 'react';
 import Button from '../../components/Button';
 import Colors from '../../constants/Colors';
-import { Link, Stack } from 'expo-router';
+import { Link, router, Stack } from 'expo-router';
 import { supabase } from '@/lib/supabase';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 
@@ -25,6 +25,7 @@ const SignUpScreen = () => {
     const { error } = await supabase.auth.signUp({ email, password });
     if (error) Alert.alert(error.message);
     setLoading(false);
+    router.push('/');
   }
 
   return (
