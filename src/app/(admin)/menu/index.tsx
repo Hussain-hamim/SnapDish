@@ -11,6 +11,7 @@ export default function MenuScreen() {
       numColumns={2}
       contentContainerStyle={{ paddingHorizontal: 10, paddingVertical: 12 }}
       columnWrapperStyle={{ gap: 5 }}
+      keyExtractor={(item) => item.id.toString()}
     />
   );
 }
