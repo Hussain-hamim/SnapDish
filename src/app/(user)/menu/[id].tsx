@@ -25,7 +25,7 @@ const ProductDetailsScreen = () => {
   const { id } = useLocalSearchParams();
   // const productId = Array.isArray(id) ? parseInt(id[0], 10) : parseInt(id, 10);
   const myId = parseFloat(typeof id === 'string' ? id : id[0]);
-  const { data: product, error, isLoading } = useProduct(myId); //
+  const { data: product, error, isLoading } = useProduct(myId);
 
   const addToCart = () => {
     if (!product) {
