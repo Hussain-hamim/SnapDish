@@ -1,8 +1,20 @@
 import { FlatList } from 'react-native';
 import products from '@assets/data/products';
 import ProductListItem from '@components/ProductListItem';
+import { useEffect } from 'react';
+import { supabase } from '@/lib/supabase';
 
 export default function MenuScreen() {
+  //
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const { data, error } = await supabase.from('products').select('*');
+      console.log(error);
+      console.log(data);
+    };
+    fetchProducts();
+  }, []);
+
   return (
     <FlatList
       data={products}

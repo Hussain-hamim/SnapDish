@@ -27,8 +27,6 @@ export default function AuthProvider({ children }: PropsWithChildren) {
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState(null);
 
-  console.log('hey', profile);
-
   useEffect(() => {
     const fetchSession = async () => {
       const {
