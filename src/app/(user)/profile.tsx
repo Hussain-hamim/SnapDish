@@ -16,6 +16,12 @@ const profile = () => {
         }}
         icon={<Ionicons name='log-out' size={22} color='white' />}
       />
+
+      <Button
+        text='Sign Out'
+        onPress={() => supabase.auth.signOut()}
+        icon={<Ionicons name='log-out' size={22} color='white' />}
+      />
     </View>
   );
 };
