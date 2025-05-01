@@ -13,7 +13,10 @@ const index = () => {
   if (loading) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator size='large' color={Colors.light.tint} />
+        <Stack.Screen options={{ headerShown: false }} />
+        <ActivityIndicator size='large' color={'orchid'} />
+        {/* <Text style={{ marginTop: 10 }}>Loading...</Text> */}
+        <Text style={{ marginTop: 10 }}>Connecting to network...</Text>
       </View>
     );
   }

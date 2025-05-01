@@ -1,6 +1,5 @@
 import { useAuth } from '@/providers/AuthProvider';
 import { Redirect, Stack } from 'expo-router';
-import { useEffect } from 'react';
 
 export default function AuthLayout() {
   const { session } = useAuth();

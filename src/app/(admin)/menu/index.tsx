@@ -3,15 +3,14 @@ import ProductListItem from '@/components/ProductListItem';
 import { useProductList } from '@/api/products';
 import { Text } from 'react-native';
 import Button from '@/components/Button';
-import { Link, useRouter } from 'expo-router';
+import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function MenuScreen() {
   const { error, data: products, isLoading } = useProductList();
-  const router = useRouter();
 
   if (isLoading) {
-    return <ActivityIndicator size='large' color={'orchid'} />;
+    return <ActivityIndicator size='large' color={'lightblue'} />;
   }
   if (error) {
     return <Text>Failed fetching products</Text>;
