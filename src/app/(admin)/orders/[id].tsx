@@ -2,7 +2,6 @@ import OrderItemListItem from '@/components/OrderItemListItem';
 import OrderListItem from '@/components/OrderListItem';
 import Colors from '@/constants/Colors';
 import { OrderStatusList } from '@/types';
-
 import { Stack, useLocalSearchParams } from 'expo-router';
 import {
   FlatList,
