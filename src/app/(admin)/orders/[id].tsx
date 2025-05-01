@@ -28,8 +28,6 @@ export default function OrderDetailsScreen() {
   if (error || !order) {
     return <Text>Failed fetching order</Text>;
   }
-  console.log('orderrrrr: ', order.order_items);
-  // console.log(id);
 
   return (
     <View style={{ padding: 10, gap: 20, flex: 1 }}>

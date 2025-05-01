@@ -92,7 +92,8 @@ const CartProvider = ({ children }: PropsWithChildren) => {
     insertOrderItems(orderItems, {
       onSuccess: () => {
         setItems([]);
-        router.push(`/(user)/orders/${order.id}`);
+        // router.push(`/(user)/orders/${order.id}`);
+        router.push(`/(user)/orders`);
       },
     });
   };
