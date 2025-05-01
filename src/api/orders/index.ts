@@ -1,7 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/providers/AuthProvider';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { InsertTables } from '@/types';
+import { InsertTables, UpdateTables } from '@/types';
 
 export const useAdminOrderList = ({ archived = false }) => {
   const statuses = archived ? ['Delivered'] : ['New', 'Cooking', 'Delivering'];
@@ -88,33 +88,35 @@ export const useInsertOrder = () => {
   });
 };
 
-// export const useUpdateProduct = () => {
-//   const queryClient = useQueryClient();
+export const useUpdateOrder = () => {
+  const queryClient = useQueryClient();
 
-//   return useMutation({
-//     async mutationFn(data: any) {
-//       const { data: updatedProduct, error } = await supabase
-//         .from('products')
-//         .update({
-//           name: data.name,
-//           image: data.image,
-//           price: data.price,
-//         })
-//         .eq('id', data.id)
-//         .select()
-//         .single();
+  return useMutation({
+    async mutationFn({
+      id,
+      updatedFields,
+    }: {
+      id: number;
+      updatedFields: UpdateTables<'orders'>;
+    }) {
+      const { data: updatedOrder, error } = await supabase
+        .from('orders')
+        .update(updatedFields)
+        .eq('id', id)
+        .select()
+        .single();
 
-//       if (error) {
-//         throw new Error(error.message);
-//       }
-//       return updatedProduct;
-//     },
-//     async onSuccess(_, data) {
-//       await queryClient.invalidateQueries({ queryKey: ['products'] });
-//       await queryClient.invalidateQueries({ queryKey: ['products', data.id] });
-//     },
-//   });
-// };
+      if (error) {
+        throw new Error(error.message);
+      }
+      return updatedOrder;
+    },
+    async onSuccess(_, data) {
+      await queryClient.invalidateQueries({ queryKey: ['orders'] });
+      await queryClient.invalidateQueries({ queryKey: ['orders', data.id] });
+    },
+  });
+};
 
 // export const useDeleteProduct = () => {
 //   const queryClient = useQueryClient();
