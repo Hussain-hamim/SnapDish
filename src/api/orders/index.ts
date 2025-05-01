@@ -42,23 +42,23 @@ export const useMyOrderList = () => {
   });
 };
 
-// export const useProduct = (id: number) => {
-//   return useQuery({
-//     queryKey: ['products', id],
-//     queryFn: async () => {
-//       const { data, error } = await supabase
-//         .from('products')
-//         .select('*')
-//         .eq('id', id)
-//         .single();
+export const useOrderDetails = (id: number) => {
+  return useQuery({
+    queryKey: ['orders', id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('orders')
+        .select('*')
+        .eq('id', id)
+        .single();
 
-//       if (error) {
-//         throw new Error(error.message);
-//       }
-//       return data;
-//     },
-//   });
-// };
+      if (error) {
+        throw new Error(error.message);
+      }
+      return data;
+    },
+  });
+};
 
 // export const useInsertProduct = () => {
 //   const queryClient = useQueryClient();
