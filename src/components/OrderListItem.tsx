@@ -62,7 +62,7 @@ const OrderListItem = ({ order }: OrderListItemProps) => {
 
         <View style={[styles.badge, { backgroundColor: bg }]}>
           <MaterialIcons
-            name={icon}
+            name={icon as keyof typeof MaterialIcons.glyphMap}
             size={16}
             color={color}
             style={{ marginRight: 6 }}
