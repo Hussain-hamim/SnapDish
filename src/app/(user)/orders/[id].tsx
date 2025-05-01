@@ -12,7 +12,7 @@ export default function OrderDetailsScreen() {
   if (isLoading) {
     return <ActivityIndicator size='large' color={'orchid'} />;
   }
-  if (error) {
+  if (error || !order) {
     return <Text>Failed fetching order</Text>;
   }
 

@@ -20,16 +20,18 @@ export default function OrderDetailsScreen() {
   if (isLoading) {
     return <ActivityIndicator size='large' color={'orchid'} />;
   }
-  if (error) {
+  if (error || !order) {
     return <Text>Failed fetching order</Text>;
   }
+  console.log('orderrrrr: ', order.order_items);
+  // console.log(id);
 
   return (
     <View style={{ padding: 10, gap: 20, flex: 1 }}>
       <Stack.Screen options={{ title: `Order #${id}` }} />
 
       <FlatList
-        data={order.order_items}
+        data={order?.order_items}
         renderItem={({ item }) => <OrderItemListItem item={item} />}
         contentContainerStyle={{ gap: 10 }}
         ListHeaderComponent={() => <OrderListItem order={order} />}
