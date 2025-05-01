@@ -3,6 +3,7 @@ import { PropsWithChildren, createContext, useContext, useState } from 'react';
 import { randomUUID } from 'expo-crypto';
 import { useInsertOrder } from '@/api/orders';
 import { useRouter } from 'expo-router';
+import { useInsertOrderItems } from '@/api/order-items';
 
 type Product = Tables<'products'>;
 
@@ -25,6 +26,7 @@ const CartContext = createContext<CartType>({
 const CartProvider = ({ children }: PropsWithChildren) => {
   const [items, setItems] = useState<CartItem[]>([]);
   const { mutate: insertOrder } = useInsertOrder();
+  const { mutate: insertOrderItems } = useInsertOrderItems();
   const router = useRouter();
 
   const addItem = (product: Product, size: CartItem['size']) => {
@@ -71,16 +73,28 @@ const CartProvider = ({ children }: PropsWithChildren) => {
     insertOrder(
       { total },
       {
-        onSuccess: (data) => {
-          setItems([]);
-          router.push(`/(user)/orders/${data.id}`);
-          console.warn('checkout order whatever', data);
-        },
+        onSuccess: saveOrderItems,
         onError: (error) => {
           console.log(error.message);
         },
       }
     );
+  };
+
+  const saveOrderItems = (order: Tables<'orders'>) => {
+    const orderItems = items.map((cartItem) => ({
+      order_id: order.id,
+      product_id: cartItem.product_id,
+      quantity: cartItem.quantity,
+      size: cartItem.size,
+    }));
+
+    insertOrderItems(orderItems, {
+      onSuccess: () => {
+        setItems([]);
+        router.push(`/(user)/orders/${order.id}`);
+      },
+    });
   };
 
   return (
