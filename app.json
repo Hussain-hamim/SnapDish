@@ -34,6 +34,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "887c9d52-4626-4a0a-9d79-8549470e5141"
+      }
+    },
+    "owner": "hussain-hamim"
   }
 }
