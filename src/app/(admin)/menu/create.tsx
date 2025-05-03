@@ -11,9 +11,10 @@ import {
   useProduct,
   useUpdateProduct,
 } from '@/api/products';
+
 import { supabase } from '@/lib/supabase';
+import * as FileSystem from 'expo-file-system';
 import { randomUUID } from 'expo-crypto';
-import FileSystem from 'expo-file-system';
 import { decode } from 'base64-arraybuffer';
 
 const CreateProductScreen = () => {
@@ -107,8 +108,7 @@ const CreateProductScreen = () => {
   };
 
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
+    const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
@@ -116,6 +116,7 @@ const CreateProductScreen = () => {
     });
 
     if (!result.canceled) {
+      console.log('Picked image URI:', result.assets[0].uri);
       setImage(result.assets[0].uri);
     }
   };
@@ -147,17 +148,30 @@ const CreateProductScreen = () => {
       return;
     }
 
-    const base64 = await FileSystem.readAsStringAsync(image, {
-      encoding: 'base64',
-    });
-    const filePath = `${randomUUID()}.png`;
-    const contentType = 'image/png';
-    const { data, error } = await supabase.storage
-      .from('product-images')
-      .upload(filePath, decode(base64), { contentType });
+    try {
+      // fetch the local file URI and convert to blob
+      const response = await fetch(image);
+      const blob = await response.blob();
 
-    if (data) {
-      return data.path;
+      // generate a simple file name
+      const fileName = `${randomUUID()}.png`;
+
+      // upload to Supabase storage
+      const { data, error } = await supabase.storage
+        .from('product-images')
+        .upload(fileName, blob, {
+          contentType: blob.type || 'image/png',
+          upsert: true, // optional: overwrites if the filename exists
+        });
+
+      if (error) {
+        console.error('Upload failed:', error.message);
+        return;
+      }
+
+      return data?.path;
+    } catch (err) {
+      console.error('Upload error:', err);
     }
   };
 

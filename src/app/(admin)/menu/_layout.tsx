@@ -12,7 +12,7 @@ export default function MenuStack() {
           title: 'Menu',
           headerRight: () => (
             <Link href='/(admin)/menu/create' asChild>
-              <Pressable>
+              <Pressable hitSlop={50}>
                 {({ pressed }) => (
                   <FontAwesome
                     name='plus-square-o'
