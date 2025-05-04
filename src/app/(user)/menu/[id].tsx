@@ -48,10 +48,10 @@ const ProductDetailsScreen = () => {
     <View style={styles.container}>
       <Stack.Screen options={{ title: product?.name }} />
 
-      <RemoteImage
-        path={product?.image}
-        fallback={defaultPizzaImage}
+      <Image
+        source={{ uri: product?.image || defaultPizzaImage }}
         style={styles.image}
+        resizeMode='contain'
       />
 
       <Text>Select size</Text>

@@ -18,11 +18,10 @@ const ProductListItem = ({ product }: ProductListItemProps) => {
     <Link href={`/${segments[0]}/menu/${product.id}`} asChild>
       <Pressable style={styles.container}>
         <View style={styles.imageWrapper}>
-          <RemoteImage
-            path={product.image}
-            fallback={defaultPizzaImage}
+          <Image
+            source={{ uri: product.image || defaultPizzaImage }}
             style={styles.image}
-            resizeMode='cover'
+            resizeMode='contain'
           />
           <View style={styles.priceTag}>
             <Text style={styles.priceText}>${product.price}</Text>
@@ -41,13 +40,13 @@ export default ProductListItem;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: '#778c94be',
     padding: 10,
     borderRadius: 20,
     flex: 1,
     maxWidth: '48%',
     margin: '1%',
-    shadowColor: '#000',
+    shadowColor: '#778c94be',
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 5 },
     shadowRadius: 10,
@@ -61,6 +60,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     aspectRatio: 1,
+    borderRadius: 40,
   },
   priceTag: {
     position: 'absolute',
