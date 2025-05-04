@@ -13,9 +13,7 @@ import {
 } from '@/api/products';
 
 import { supabase } from '@/lib/supabase';
-import * as FileSystem from 'expo-file-system';
 import { randomUUID } from 'expo-crypto';
-import { decode } from 'base64-arraybuffer';
 
 const CreateProductScreen = () => {
   const [name, setName] = useState('');
@@ -28,7 +26,7 @@ const CreateProductScreen = () => {
   const myId = parseFloat(typeof id === 'string' ? id : id[0]);
   const isUpdating = !!id;
 
-  const { mutate: insertProduct, error } = useInsertProduct();
+  const { mutate: insertProduct } = useInsertProduct();
   const { mutate: updateProduct } = useUpdateProduct();
   const { data: updatingProduct } = useProduct(myId);
   const { mutate: deleteProduct } = useDeleteProduct();
@@ -44,6 +42,7 @@ const CreateProductScreen = () => {
   const resetFields = () => {
     setName('');
     setPrice('');
+    setImage(null);
   };
 
   const validateInput = () => {
@@ -63,23 +62,17 @@ const CreateProductScreen = () => {
     return true;
   };
 
-  const onSubmit = () => {
-    if (isUpdating) {
-      // update
-      onUpdate();
-    } else {
-      onCreate();
-    }
-  };
-
   const onCreate = async () => {
-    if (!validateInput()) {
-      return;
+    if (!validateInput()) return;
+
+    let imagePath = image;
+    if (image?.startsWith('file://')) {
+      const uploadedPath = await uploadImage();
+      if (uploadedPath) {
+        imagePath = uploadedPath;
+      }
     }
 
-    const imagePath = await uploadImage();
-
-    // Save in the database
     insertProduct(
       { name, price: parseFloat(price), image: imagePath },
       {
@@ -91,13 +84,19 @@ const CreateProductScreen = () => {
     );
   };
 
-  const onUpdate = () => {
-    if (!validateInput()) {
-      return;
+  const onUpdate = async () => {
+    if (!validateInput()) return;
+
+    let imagePath = image;
+    if (image?.startsWith('file://')) {
+      const uploadedPath = await uploadImage();
+      if (uploadedPath) {
+        imagePath = uploadedPath;
+      }
     }
-    // Save in the database
+
     updateProduct(
-      { id: myId, name, price: parseFloat(price), image },
+      { id: myId, name, price: parseFloat(price), image: imagePath },
       {
         onSuccess: () => {
           resetFields();
@@ -105,6 +104,14 @@ const CreateProductScreen = () => {
         },
       }
     );
+  };
+
+  const onSubmit = () => {
+    if (isUpdating) {
+      onUpdate();
+    } else {
+      onCreate();
+    }
   };
 
   const pickImage = async () => {
@@ -121,6 +128,36 @@ const CreateProductScreen = () => {
     }
   };
 
+  const uploadImage = async () => {
+    if (!image?.startsWith('file://')) {
+      return null;
+    }
+
+    try {
+      const response = await fetch(image);
+      const blob = await response.blob();
+
+      const fileName = `${randomUUID()}.png`;
+      console.log('Uploading to Supabase as:', fileName);
+
+      const { data, error } = await supabase.storage
+        .from('product-images')
+        .upload(fileName, blob, {
+          contentType: 'image/png',
+        });
+
+      if (error) {
+        console.error('Upload failed:', error.message);
+        return null;
+      }
+
+      return data.path;
+    } catch (err) {
+      console.error('Unexpected upload error:', err);
+      return null;
+    }
+  };
+
   const onDelete = () => {
     deleteProduct(myId, {
       onSuccess: () => {
@@ -131,48 +168,14 @@ const CreateProductScreen = () => {
   };
 
   const confirmDelete = () => {
-    Alert.alert('Confirm', 'Are you sure you want to delete this product', [
-      {
-        text: 'Cancel',
-      },
+    Alert.alert('Confirm', 'Are you sure you want to delete this product?', [
+      { text: 'Cancel' },
       {
         text: 'Delete',
         style: 'destructive',
         onPress: onDelete,
       },
     ]);
-  };
-
-  const uploadImage = async () => {
-    if (!image?.startsWith('file://')) {
-      return;
-    }
-
-    try {
-      // fetch the local file URI and convert to blob
-      const response = await fetch(image);
-      const blob = await response.blob();
-
-      // generate a simple file name
-      const fileName = `${randomUUID()}.png`;
-
-      // upload to Supabase storage
-      const { data, error } = await supabase.storage
-        .from('product-images')
-        .upload(fileName, blob, {
-          contentType: blob.type || 'image/png',
-          upsert: true, // optional: overwrites if the filename exists
-        });
-
-      if (error) {
-        console.error('Upload failed:', error.message);
-        return;
-      }
-
-      return data?.path;
-    } catch (err) {
-      console.error('Upload error:', err);
-    }
   };
 
   return (
@@ -234,7 +237,6 @@ const styles = StyleSheet.create({
     color: Colors.light.tint,
     marginVertical: 10,
   },
-
   input: {
     backgroundColor: 'white',
     padding: 10,
