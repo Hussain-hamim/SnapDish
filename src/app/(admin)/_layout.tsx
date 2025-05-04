@@ -3,6 +3,7 @@ import { Redirect, Tabs } from 'expo-router';
 import { useColorScheme } from 'react-native';
 import Colors from '../../constants/Colors';
 import { useAuth } from '@/providers/AuthProvider';
+import { StatusBar } from 'expo-status-bar';
 
 function TabBarIcon({
   name,
@@ -40,13 +41,14 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        tabBarInactiveTintColor: 'gray',
+        tabBarInactiveTintColor: 'black',
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: '600',
         },
         tabBarStyle: {
-          backgroundColor: '#fff',
+          // backgroundColor: '#fff',
+          backgroundColor: Colors.light.tint,
           borderTopWidth: 0,
           height: 70,
           paddingBottom: 10,

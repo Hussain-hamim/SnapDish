@@ -12,9 +12,10 @@ import { defaultPizzaImage } from '@/components/ProductListItem';
 import Colors from '@/constants/Colors';
 import { useCart } from '@/providers/CartProvider';
 import { PizzaSize } from '@/types';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import RemoteImage from '@/components/RemoteImage';
+import Button from '@/components/Button';
 
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 
@@ -75,6 +76,13 @@ const ProductDetailsScreen = () => {
 
       <Text style={styles.title}>{product?.name}</Text>
       <Text style={styles.price}>${product?.price}</Text>
+
+      <Link href={`/(admin)/menu/create?id=${product?.id}`} asChild>
+        <Button
+          text='update dish'
+          icon={<Ionicons name='add' size={24} color={'white'} />}
+        />
+      </Link>
     </View>
   );
 };

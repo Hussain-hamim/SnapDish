@@ -18,7 +18,7 @@ export default function MenuScreen() {
 
   return (
     <>
-      <Link href='/create' asChild>
+      <Link href='/(admin)/menu/create' asChild>
         <Button
           text='Add New Dish'
           icon={<Ionicons name='add' size={24} color={'white'} />}
