@@ -1,6 +1,7 @@
 import { useAdminOrderList } from '@/api/orders';
 import { ordersInsertSubscription } from '@/api/orders/subscriptions';
 import OrderListItem from '@/components/OrderListItem';
+import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, FlatList, Text } from 'react-native';
 
 export default function OrdersScreen() {
@@ -20,10 +21,13 @@ export default function OrdersScreen() {
   }
 
   return (
-    <FlatList
-      data={orders}
-      renderItem={({ item }) => <OrderListItem order={item} />}
-      contentContainerStyle={{ gap: 10, padding: 10 }}
-    />
+    <>
+      <StatusBar style='dark' />
+      <FlatList
+        data={orders}
+        renderItem={({ item }) => <OrderListItem order={item} />}
+        contentContainerStyle={{ gap: 10, padding: 10 }}
+      />
+    </>
   );
 }

@@ -5,6 +5,7 @@ import { Text } from 'react-native';
 import Button from '@/components/Button';
 import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { StatusBar } from 'expo-status-bar';
 
 export default function MenuScreen() {
   const { error, data: products, isLoading } = useProductList();
@@ -18,6 +19,7 @@ export default function MenuScreen() {
 
   return (
     <>
+      <StatusBar style='light' />
       <Link href='/(admin)/menu/create' asChild>
         <Button
           text='Add New Dish'
