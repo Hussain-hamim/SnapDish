@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, ActivityIndicator, StyleSheet, Image } from 'react-native';
 import React from 'react';
 import Button from '../components/Button';
 import { Link, Redirect, Stack } from 'expo-router';
@@ -6,18 +6,27 @@ import { useAuth } from '@/providers/AuthProvider';
 import { supabase } from '@/lib/supabase';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const index = () => {
   const { session, loading, isAdmin } = useAuth();
 
   if (loading) {
     return (
-      <View style={styles.center}>
+      <LinearGradient colors={['#1f1c2c', '#928DAB']} style={styles.container2}>
         <Stack.Screen options={{ headerShown: false }} />
-        <ActivityIndicator size='large' color={'orchid'} />
-        {/* <Text style={{ marginTop: 10 }}>Loading...</Text> */}
-        <Text style={{ marginTop: 10 }}>Connecting to network...</Text>
-      </View>
+        <Image
+          source={require('../../assets/images/snapdish.png')} // Replace with your logo
+          style={styles.logo}
+          resizeMode='contain'
+        />
+        <ActivityIndicator
+          size='large'
+          color='#fff'
+          style={{ marginTop: 20 }}
+        />
+        <Text style={styles.text}>Connecting to network...</Text>
+      </LinearGradient>
     );
   }
 
@@ -36,7 +45,6 @@ const index = () => {
       {/* 🧑‍🍳 Header */}
       <View style={styles.header}>
         <MaterialCommunityIcons
-          // name='silverware-fork-knife'
           name='food-turkey'
           size={42}
           // color={Colors.light.tint}
@@ -125,6 +133,22 @@ const styles = StyleSheet.create({
     shadowRadius: 12,
     elevation: 8,
     gap: 15,
+  },
+  container2: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logo: {
+    width: 120,
+    height: 120,
+  },
+  text: {
+    color: '#fff',
+    marginTop: 10,
+    fontSize: 16,
+    fontWeight: '300',
+    letterSpacing: 0.5,
   },
 });
 
