@@ -50,7 +50,7 @@ const index = () => {
           // color={Colors.light.tint}
           color='chocolate'
         />
-        <Text style={styles.title}>FoodieHub</Text>
+        <Text style={styles.title}>SnapDish</Text>
         <Text style={styles.subtitle}>Pick your role & start ordering</Text>
       </View>
 

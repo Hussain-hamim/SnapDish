@@ -14,6 +14,7 @@ import Colors from '../../constants/Colors';
 import { Link, router, Stack } from 'expo-router';
 import { supabase } from '@/lib/supabase';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { StatusBar } from 'expo-status-bar';
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState('');
@@ -42,7 +43,7 @@ const SignUpScreen = () => {
         {/* 🍔 Header */}
         <View style={styles.header}>
           <Ionicons name='fast-food' size={48} color={Colors.light.tint} />
-          <Text style={styles.title}>Join FoodieHub</Text>
+          <Text style={styles.title}>Join SnapDish</Text>
           <Text style={styles.subtitle}>Order food faster than ever</Text>
         </View>
 
