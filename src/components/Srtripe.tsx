@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
+import Button from './Button'; // your custom button
 
 const supabaseUrl = 'https://ftshbergelkxcqcgoqjp.supabase.co';
 const supabaseAnonKey =
@@ -8,9 +8,9 @@ const supabaseAnonKey =
 
 const PaymentComponent = () => {
   const handlePayment = async () => {
-    const amount = 5000; // Amount in cents (e.g., $50.00)
-    const currency = 'usd'; // Currency code
-    const paymentMethodId = 'pm_card_visa'; // Replace with the actual payment method ID
+    const amount = 5000; // in cents, e.g. $50.00
+    const currency = 'usd';
+    const paymentMethodId = 'pm_card_visa'; // Replace this with dynamic ID from frontend Stripe SDK
 
     try {
       const paymentIntent = await processPayment(
@@ -18,25 +18,24 @@ const PaymentComponent = () => {
         currency,
         paymentMethodId
       );
-      console.log('Payment processed successfully:', paymentIntent);
-      // You can add additional logic here, like showing a success message to the user
-    } catch (error) {
-      console.error('Payment failed:', error);
-      // Handle the error, e.g., show an error message to the user
+      console.log('✅ Payment processed successfully:', paymentIntent);
+      // show success UI
+    } catch (error: any) {
+      console.error('❌ Payment failed:', error?.message || error);
+      // show error UI
     }
   };
 
   return (
     <View>
-      <TouchableOpacity onPress={handlePayment}>
-        <Text>Pay now</Text>
-      </TouchableOpacity>
+      <Button onPress={handlePayment} text='Pay Now' />
     </View>
   );
 };
 
 export default PaymentComponent;
 
+// Function that calls your Supabase Edge Function
 const processPayment = async (
   amount: number,
   currency: string,
@@ -49,7 +48,7 @@ const processPayment = async (
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${supabaseAnonKey}`, // Include the authorization header if needed
+          Authorization: `Bearer ${supabaseAnonKey}`,
         },
         body: JSON.stringify({ amount, currency, paymentMethodId }),
       }
@@ -58,13 +57,13 @@ const processPayment = async (
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.error);
+      console.error('🔴 Supabase Function Error:', data);
+      throw new Error(data.error || 'Unknown error from server');
     }
 
-    console.log('Payment Intent:', data);
-    return data; // Return the payment intent data
-  } catch (error) {
-    console.error('Error processing payment:', error);
-    throw error; // Handle the error as needed
+    return data;
+  } catch (error: any) {
+    console.error('🔴 Network or parsing error:', error?.message || error);
+    throw new Error(error?.message || 'Payment request failed');
   }
 };

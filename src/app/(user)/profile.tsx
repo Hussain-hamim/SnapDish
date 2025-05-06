@@ -4,6 +4,7 @@ import { Link, router } from 'expo-router';
 import Button from '@/components/Button';
 import { supabase } from '@/lib/supabase';
 import { Ionicons } from '@expo/vector-icons';
+import PaymentComponent from '@/components/Srtripe';
 
 const profile = () => {
   return (
@@ -22,6 +23,8 @@ const profile = () => {
         onPress={() => supabase.auth.signOut()}
         icon={<Ionicons name='log-out' size={22} color='white' />}
       />
+
+      <PaymentComponent />
     </View>
   );
 };
