@@ -1,4 +1,11 @@
-import { View, Text, ActivityIndicator, StyleSheet, Image } from 'react-native';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  StyleSheet,
+  Image,
+  useColorScheme,
+} from 'react-native';
 import React from 'react';
 import Button from '../components/Button';
 import { Link, Redirect, Stack } from 'expo-router';
@@ -7,6 +14,7 @@ import { supabase } from '@/lib/supabase';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
+import { StatusBar } from 'expo-status-bar';
 
 const index = () => {
   const { session, loading, isAdmin } = useAuth();
@@ -38,9 +46,14 @@ const index = () => {
     return <Redirect href='/(user)' />;
   }
 
+  const colorScheme = useColorScheme();
+
+  const statusbarColor = colorScheme === 'dark' ? 'light' : 'dark';
+
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
+      <StatusBar style={statusbarColor} />
 
       {/* 🧑‍🍳 Header */}
       <View style={styles.header}>
@@ -55,7 +68,12 @@ const index = () => {
       </View>
 
       {/* 🚀 Action Panel */}
-      <View style={styles.card}>
+      <View
+        style={[
+          styles.card,
+          { backgroundColor: colorScheme === 'dark' ? '#1f1c2c' : '#fff' },
+        ]}
+      >
         <Link href='/(user)' asChild>
           <Button
             text='User Dashboard'
@@ -102,7 +120,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
+    // backgroundColor: Colors.light.background,
     padding: 20,
     paddingTop: 100,
   },
