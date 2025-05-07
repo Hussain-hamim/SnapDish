@@ -24,7 +24,7 @@ export default function OrderDetailsScreen() {
 
     console.log('notify', order?.user_id);
     if (order) {
-      await notifyUserAboutOrderUpdate(order);
+      await notifyUserAboutOrderUpdate({ ...order, status });
     }
   };
 
