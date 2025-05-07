@@ -2,11 +2,11 @@ import { supabase } from '@/lib/supabase';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
-export const ordersInsertSubscription = () => {
+export const useOrdersInsertSubscription = () => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    const channels = supabase
+    const channel = supabase
       .channel('custom-insert-channel')
       .on(
         'postgres_changes',
@@ -18,9 +18,9 @@ export const ordersInsertSubscription = () => {
       .subscribe();
 
     return () => {
-      channels.unsubscribe();
+      channel.unsubscribe();
     };
-  }, []);
+  }, [queryClient]);
 };
 
 export const ordersUpdateSubscription = (id: number) => {
