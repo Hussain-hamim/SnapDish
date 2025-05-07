@@ -5,6 +5,12 @@
 import Stripe from 'https://esm.sh/stripe@13.10.0?target=deno&deno-std=0.132.0&no-check';
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+// esm.sh is used to compile stripe-node to be compatible with ES modules.
+//💳 3. Stripe SDK Initialization
+export const stripe = Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
+  httpClient: Stripe.createFetchHttpClient(),
+});
+console.log('Hello from Functions!');
 
 export const createOrRetrieveProfile = async (req: Request) => {
   const supabaseClient = createClient(
@@ -33,6 +39,7 @@ export const createOrRetrieveProfile = async (req: Request) => {
   }
 
   console.log(profile);
+
   if (profile.stripe_customer_id) {
     return profile.stripe_customer_id;
   }
@@ -51,19 +58,13 @@ export const createOrRetrieveProfile = async (req: Request) => {
   return customer.id;
 };
 
-// esm.sh is used to compile stripe-node to be compatible with ES modules.
-export const stripe = Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
-  httpClient: Stripe.createFetchHttpClient(),
-});
-console.log('Hello from Functions!');
-
+// Deno serve() listens for incoming HTTP requests.
 serve(async (req: Request) => {
   try {
     const { amount } = await req.json();
-
     const customer = await createOrRetrieveProfile(req);
 
-    // Create an ephermeralKey so that the Stripe SDK can fetch the customer's stored payment methods.
+    // Create an ephemeral Key so that the Stripe SDK can fetch the customer's stored payment methods.
     const ephemeralKey = await stripe.ephemeralKeys.create(
       { customer: customer },
       { apiVersion: '2020-08-27' }

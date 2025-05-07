@@ -26,7 +26,7 @@ export const initialisePaymentSheet = async (amount: number) => {
   if (!paymentIntent || !publishableKey) return;
 
   const result = await initPaymentSheet({
-    merchantDisplayName: 'notJust.dev',
+    merchantDisplayName: 'Hussain.app',
     paymentIntentClientSecret: paymentIntent,
     customerId: customer,
     customerEphemeralKeySecret: ephemeralKey,
