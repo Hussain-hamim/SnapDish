@@ -34,6 +34,7 @@ export const createOrRetrieveProfile = async (req: Request) => {
     .select('*')
     .eq('id', user.id)
     .single();
+
   if (error || !profile) {
     throw new Error('Profile not found');
   }

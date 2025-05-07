@@ -19,7 +19,8 @@ const ProductListItem = ({ product }: ProductListItemProps) => {
       <Pressable style={styles.container}>
         <View style={styles.imageWrapper}>
           <Image
-            source={{ uri: product.image || defaultPizzaImage }}
+            // source={{ uri: product.image || defaultPizzaImage }}
+            source={{ uri: defaultPizzaImage }}
             style={styles.image}
             resizeMode='contain'
           />
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     aspectRatio: 1,
-    borderRadius: 40,
+    // borderRadius: 40,
   },
   priceTag: {
     position: 'absolute',
