@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useOrderDetails, useUpdateOrder } from '@/api/orders';
+import { notifyUserAboutOrderUpdate } from '@/lib/notifications';
 
 export default function OrderDetailsScreen() {
   const { id: idString } = useLocalSearchParams();
@@ -18,8 +19,13 @@ export default function OrderDetailsScreen() {
   const { data: order, isLoading, error } = useOrderDetails(id);
   const { mutate: updateOrder } = useUpdateOrder();
 
-  const updateStatus = (status: string) => {
+  const updateStatus = async (status: string) => {
     updateOrder({ id: id, updatedFields: { status } });
+
+    console.log('notify', order?.user_id);
+    if (order) {
+      await notifyUserAboutOrderUpdate(order);
+    }
   };
 
   if (isLoading) {

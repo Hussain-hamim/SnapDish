@@ -13,17 +13,11 @@ type OrderListItemProps = {
 };
 
 const statusMap = {
-  new: {
-    icon: 'fiber-new',
-    color: '#1E90FF',
-    bg: 'rgba(30, 144, 255, 0.1)',
-    label: 'New',
-  },
-  cooking: {
-    icon: 'local-fire-department',
-    color: '#FFA500',
-    bg: 'rgba(255, 165, 0, 0.1)',
-    label: 'Cooking',
+  delivered: {
+    icon: 'check-circle',
+    color: '#32CD32',
+    bg: 'rgba(50, 205, 50, 0.1)',
+    label: 'Delivered',
   },
   delivering: {
     icon: 'delivery-dining',
@@ -31,11 +25,17 @@ const statusMap = {
     bg: 'rgba(0, 191, 255, 0.1)',
     label: 'Delivering',
   },
-  delivered: {
-    icon: 'check-circle',
-    color: '#32CD32',
-    bg: 'rgba(50, 205, 50, 0.1)',
-    label: 'Delivered',
+  cooking: {
+    icon: 'local-fire-department',
+    color: '#FFA500',
+    bg: 'rgba(255, 165, 0, 0.1)',
+    label: 'Cooking',
+  },
+  new: {
+    icon: 'fiber-new',
+    color: '#1E90FF',
+    bg: 'rgba(30, 144, 255, 0.1)',
+    label: 'New',
   },
 };
 
