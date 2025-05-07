@@ -43,7 +43,10 @@
     "react-native-url-polyfill": "^2.0.0",
     "react-native-web": "~0.19.13",
     "expo-linear-gradient": "~14.0.2",
-    "@stripe/stripe-react-native": "0.38.6"
+    "@stripe/stripe-react-native": "0.38.6",
+    "expo-notifications": "~0.29.14",
+    "expo-device": "~7.0.3",
+    "expo-constants": "~17.0.8"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
