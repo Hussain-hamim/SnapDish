@@ -15,6 +15,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
+//https://expo.dev/artifacts/eas/cBwdy4NumNH9hpM6wzdigD.apk
 
 const index = () => {
   const { session, loading, isAdmin } = useAuth();
