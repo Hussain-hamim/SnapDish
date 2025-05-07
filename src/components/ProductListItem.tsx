@@ -18,12 +18,13 @@ const ProductListItem = ({ product }: ProductListItemProps) => {
     <Link href={`/${segments[0]}/menu/${product.id}`} asChild>
       <Pressable style={styles.container}>
         <View style={styles.imageWrapper}>
-          <Image
-            // source={{ uri: product.image || defaultPizzaImage }}
-            source={{ uri: defaultPizzaImage }}
+          <RemoteImage
+            path={product.image}
+            fallback={defaultPizzaImage}
             style={styles.image}
             resizeMode='contain'
           />
+
           <View style={styles.priceTag}>
             <Text style={styles.priceText}>${product.price}</Text>
           </View>

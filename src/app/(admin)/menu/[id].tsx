@@ -68,8 +68,9 @@ const ProductDetailsScreen = () => {
 
       <Stack.Screen options={{ title: product?.name }} />
 
-      <Image
-        source={{ uri: product?.image || defaultPizzaImage }}
+      <RemoteImage
+        path={product?.image}
+        fallback={defaultPizzaImage}
         style={styles.image}
         resizeMode='contain'
       />
@@ -79,8 +80,8 @@ const ProductDetailsScreen = () => {
 
       <Link href={`/(admin)/menu/create?id=${product?.id}`} asChild>
         <Button
-          text='update dish'
-          icon={<Ionicons name='add' size={24} color={'white'} />}
+          text='Update Dish'
+          icon={<FontAwesome name='edit' size={24} color={'white'} />}
         />
       </Link>
     </View>
