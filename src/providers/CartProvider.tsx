@@ -71,10 +71,13 @@ const CartProvider = ({ children }: PropsWithChildren) => {
   );
 
   const checkout = async () => {
-    await initialisePaymentSheet(Math.floor(total * 100)); // convert to cents
+    await initialisePaymentSheet(Math.floor(total * 100)).finally(async () => {
+      const payed = await openPaymentSheet();
+      if (!payed) return;
+    }); // convert to cents
 
-    const payed = await openPaymentSheet();
-    if (!payed) return;
+    // const payed = await openPaymentSheet();
+    // if (!payed) return;
 
     insertOrder(
       { total },
